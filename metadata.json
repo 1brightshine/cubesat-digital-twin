@@ -1,0 +1,6 @@
+{
+  "name": "CubeSat Orbit & Lifetime Simulator",
+  "description": "Interactive 3D Keplerian orbit simulator, ground track projection, and atmospheric drag orbital lifetime analysis for CubeSats.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
