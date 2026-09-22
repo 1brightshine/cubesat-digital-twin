@@ -165,29 +165,24 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLaunchSimulator }) =
               <span>ETHIOPIAN AEROSPACE CAPSTONE INTERNSHIP &bull; 2026</span>
             </div>
 
-            <div className="relative w-full max-w-6xl mx-auto mb-6 rounded-[28px] border border-slate-700/80 bg-slate-950/50 overflow-hidden shadow-[0_0_35px_rgba(14,116,144,0.18)]">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(45,212,191,0.15),transparent_50%),linear-gradient(90deg,rgba(2,6,23,0.92),rgba(2,6,23,0.52),rgba(2,6,23,0.92))]" />
-              <img
-                src="/banner.png"
-                alt="CubeSat banner"
-                className="w-full h-[240px] sm:h-[280px] lg:h-[340px] object-cover opacity-35 mix-blend-screen"
-              />
-              <div className="absolute inset-0 flex items-center justify-center px-4">
-                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] text-center">
-                  <span className="text-slate-200 drop-shadow-[0_2px_24px_rgba(15,23,42,0.9)]">SSGI</span>{' '}
-                  <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent drop-shadow-[0_2px_20px_rgba(34,211,238,0.35)]">
-                    CubeSat Digital Twin
-                  </span>
-                </h1>
-              </div>
-            </div>
+            {/* Bold Technical Headline */}
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1] mb-6">
+              <span className="bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
+                SSGI CubeSat
+              </span>{' '}
+              <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">
+                Digital Twin
+              </span>
+            </h1>
 
-            {/* Historic Subheadline */}
+            {/* Prominent Historic Subheadline */}
             <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal mb-10 max-w-3xl">
-              Engineered by the first aerospace engineering students in Ethiopia at{' '}
-              <span className="text-cyan-300 font-semibold">Bahir Dar University</span>,
+              Engineered by Ethiopia&apos;s first Aerospace Engineering student cohort at Bahir Dar University
               during our milestone capstone internship at the{' '}
-              <span className="text-cyan-300 font-semibold">Space Science and Geospatial Institute (SSGI)</span>.
+              <span className="text-cyan-300 font-semibold">
+                Space Science and Geospatial Institute (SSGI)
+              </span>
+              .
             </p>
 
             {/* High-visibility Glowing Neon Call-To-Action Button */}
@@ -205,7 +200,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLaunchSimulator }) =
                 href="#history"
                 className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-slate-900/80 hover:bg-slate-800/80 border border-slate-700/80 text-slate-300 hover:text-white font-mono text-sm font-semibold transition-all flex items-center justify-center gap-2"
               >
-                <span>Read About Bahir Dar University</span>
+                <span>Read Institutional History</span>
                 <ChevronRight className="w-4 h-4 text-slate-400" />
               </a>
             </div>
@@ -265,6 +260,26 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLaunchSimulator }) =
             Institutional Legacy &amp; Space Missions
           </h2>
 
+          <div className="relative mb-10 overflow-hidden rounded-2xl border border-cyan-500/30 bg-slate-900 shadow-2xl shadow-cyan-950/20">
+            <img
+              src="/publicimagescampus-gate.jpg.jpg"
+              alt="Bahir Dar University campus gate"
+              className="h-48 w-full object-cover sm:h-64 lg:h-72"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/35 to-transparent" />
+            <div className="absolute inset-y-0 left-0 flex max-w-xl flex-col justify-center px-5 sm:px-8">
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-cyan-300">
+                BAHIR DAR UNIVERSITY
+              </span>
+              <h3 className="mt-2 text-xl font-bold text-white sm:text-2xl">
+                A home for Ethiopia&apos;s aerospace future
+              </h3>
+              <p className="mt-2 max-w-md text-xs leading-relaxed text-slate-200 sm:text-sm">
+                A leading hub for engineering, technology, and the pioneering Aerospace Engineering Bachelor&apos;s cohort.
+              </p>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
             {/* LEFT COLUMN: Two sleek, grayscale logo placeholder slots that glow on hover */}
             <div className="lg:col-span-5 flex flex-col gap-6">
@@ -275,23 +290,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLaunchSimulator }) =
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 group-hover:bg-cyan-500/15 rounded-full blur-2xl transition-all" />
                 <div className="flex items-start gap-4">
-                  {/* Institutional logo image */}
-                  <img
-                    src="/ssgi-logo.png"
-                    alt="Space Science and Geospatial Institute logo"
-                    className="w-16 h-16 object-contain rounded-xl bg-slate-800/80 border border-slate-700 group-hover:border-cyan-400/80 shrink-0 transition-all group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const fallback = target.nextElementSibling as HTMLElement | null;
-                      if (fallback) fallback.style.display = 'flex';
-                    }}
-                  />
-                  <div className="hidden w-16 h-16 rounded-xl bg-slate-800/80 group-hover:bg-cyan-950/60 border border-slate-700 group-hover:border-cyan-400/80 items-center justify-center shrink-0 transition-all group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]">
-                    <div className="relative flex items-center justify-center">
-                      <Globe2 className="w-8 h-8 text-slate-400 group-hover:text-cyan-300 transition-colors" />
-                      <Satellite className="w-4 h-4 text-slate-300 group-hover:text-cyan-100 absolute -top-1 -right-1" />
-                    </div>
+                  {/* Aerospace Insignia Placeholder Badge */}
+                  <div className="w-16 h-16 rounded-xl bg-slate-800/80 group-hover:bg-cyan-950/60 border border-slate-700 group-hover:border-cyan-400/80 flex items-center justify-center shrink-0 overflow-hidden transition-all group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]">
+                    <img src="/ssgi-logo.png.jpg" alt="SSGI logo" className="h-full w-full object-contain p-2" />
                   </div>
 
                   <div className="flex-1">
@@ -326,20 +327,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLaunchSimulator }) =
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 group-hover:bg-emerald-500/15 rounded-full blur-2xl transition-all" />
                 <div className="flex items-start gap-4">
-                  {/* University logo image */}
-                  <img
-                    src="/bahir-dar-logo.png"
-                    alt="Bahir Dar University logo"
-                    className="w-16 h-16 object-contain rounded-xl bg-slate-800/80 border border-slate-700 group-hover:border-emerald-400/80 shrink-0 transition-all group-hover:shadow-[0_0_20px_rgba(16,185,129,0.4)]"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const fallback = target.nextElementSibling as HTMLElement | null;
-                      if (fallback) fallback.style.display = 'flex';
-                    }}
-                  />
-                  <div className="hidden w-16 h-16 rounded-xl bg-slate-800/80 group-hover:bg-emerald-950/60 border border-slate-700 group-hover:border-emerald-400/80 items-center justify-center shrink-0 transition-all group-hover:shadow-[0_0_20px_rgba(16,185,129,0.4)]">
-                    <Award className="w-8 h-8 text-slate-400 group-hover:text-emerald-300 transition-colors" />
+                  {/* Aerospace Insignia Placeholder Badge */}
+                  <div className="w-16 h-16 rounded-xl bg-slate-800/80 group-hover:bg-emerald-950/60 border border-slate-700 group-hover:border-emerald-400/80 flex items-center justify-center shrink-0 overflow-hidden transition-all group-hover:shadow-[0_0_20px_rgba(16,185,129,0.4)]">
+                    <img src="/bahir-dar-logo.png.jpg" alt="Bahir Dar University logo" className="h-full w-full object-contain p-2" />
                   </div>
 
                   <div className="flex-1">
@@ -352,17 +342,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLaunchSimulator }) =
                       </span>
                     </div>
                     <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-emerald-200 transition-colors">
-                      Bahir Dar University
+                      Bahir Dar University: Aerospace Engineering
                     </h3>
                     <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-                      The academic home of Ethiopia&apos;s first aerospace engineering students,
-                      where foundational research, design, and capstone learning shaped this CubeSat initiative.
+                      Bahir Dar University is a leading Ethiopian center for innovation and technology,
+                      and the home of the country&apos;s pioneering Aerospace Engineering Bachelor&apos;s cohort.
                     </p>
                   </div>
                 </div>
 
                 <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
-                  <span className="text-emerald-400/90 font-medium">B.Sc. Aerospace Engineering</span>
+                  <span className="text-emerald-400/90 font-medium">Bahir Dar University &bull; B.Sc. Aerospace Engineering</span>
                   <span className="text-slate-500">Capstone 2026</span>
                 </div>
               </div>
@@ -397,12 +387,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLaunchSimulator }) =
                 <p>
                   This strategic merger unified Ethiopia&apos;s satellite operations, aerospace engineering, astronomical research at Entoto
                   Observatory, and nationwide geospatial mapping under a single high-tech institutional command.
-                </p>
-
-                <p>
-                  Bahir Dar University also plays a central role in this story as the academic foundation for Ethiopia&apos;s first aerospace
-                  engineering students. Its research culture, design training, and capstone environment helped shape the next generation of
-                  engineers behind this mission.
                 </p>
 
                 {/* Satellite Launch Legacy Cards */}
@@ -486,7 +470,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLaunchSimulator }) =
                 SYSTEM DEVELOPERS &amp; FLIGHT CREW
               </h2>
               <p className="text-sm text-slate-400 mt-2 max-w-2xl font-normal">
-                First aerospace engineering students in Ethiopia at Bahir Dar University, developed during our capstone internship at SSGI Addis Ababa.
+                Ethiopia&apos;s first Aerospace Engineering student cohort at Bahir Dar University, developing this digital twin during our capstone internship at SSGI Addis Ababa.
               </p>
             </div>
 
@@ -569,32 +553,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLaunchSimulator }) =
                       {member.role}
                     </div>
 
-                    {/* Instagram handle if available */}
-                    {member.instagramHandle && (
-                      <div className="mt-1.5">
-                        <a
-                          href={member.instagramUrl || `https://www.instagram.com/${member.instagramHandle.replace('@', '')}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-rose-950/50 border border-rose-500/40 text-rose-300 hover:text-white text-[11px] font-mono transition-colors"
-                        >
-                          <Instagram className="w-3 h-3 text-rose-400" />
-                          <span>{member.instagramHandle}</span>
-                        </a>
-                      </div>
-                    )}
-
                     <div className="text-[11px] text-slate-400 mt-2 font-mono">
                       {member.specialization}
                     </div>
                   </div>
 
                   {/* Bio */}
-                  {member.bio && (
-                    <p className="text-xs text-slate-300 leading-relaxed mb-4">
-                      {member.bio}
-                    </p>
-                  )}
+                  <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                    {member.bio}
+                  </p>
                 </div>
 
                 {/* Row of action links / buttons for professional contact information */}

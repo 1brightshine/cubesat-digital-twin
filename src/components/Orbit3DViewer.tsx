@@ -925,7 +925,10 @@ export const Orbit3DViewer: React.FC<Orbit3DViewerProps> = ({
     }
 
     if (threePoints.length > 0) {
-      orbitLineRef.current.geometry.setFromPoints(threePoints);
+      const previousOrbitGeometry = orbitLineRef.current.geometry;
+      const orbitGeometry = new THREE.BufferGeometry().setFromPoints(threePoints);
+      orbitLineRef.current.geometry = orbitGeometry;
+      previousOrbitGeometry.dispose();
 
       // Compute vertex colors demonstrating sunlight / shadow transition on orbit path
       const colors: number[] = [];
@@ -956,14 +959,12 @@ export const Orbit3DViewer: React.FC<Orbit3DViewerProps> = ({
         }
       }
 
-      orbitLineRef.current.geometry.setAttribute(
+      orbitGeometry.setAttribute(
         'color',
         new THREE.Float32BufferAttribute(colors, 3)
       );
-      orbitLineRef.current.geometry.attributes.position.needsUpdate = true;
-      if (orbitLineRef.current.geometry.attributes.color) {
-        orbitLineRef.current.geometry.attributes.color.needsUpdate = true;
-      }
+      orbitGeometry.attributes.position.needsUpdate = true;
+      orbitGeometry.attributes.color.needsUpdate = true;
     }
 
     // Perigee marker (nu = 0)
