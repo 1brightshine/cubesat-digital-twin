@@ -145,8 +145,6 @@ export const NasaSpiceApiModal: React.FC<NasaSpiceApiModalProps> = ({
   // --- TAB 3: NASA Space-Track.org API State ---
   const [spaceTrackCatId, setSpaceTrackCatId] = useState<string>('25544');
   const [spaceTrackName, setSpaceTrackName] = useState<string>('');
-  const [spaceTrackEmail, setSpaceTrackEmail] = useState<string>('');
-  const [spaceTrackPassword, setSpaceTrackPassword] = useState<string>('');
   const [isQueryingSpaceTrack, setIsQueryingSpaceTrack] = useState<boolean>(false);
   const [spaceTrackResponse, setSpaceTrackResponse] = useState<any>(null);
   const [copiedSpaceTrackCurl, setCopiedSpaceTrackCurl] = useState<boolean>(false);
@@ -230,19 +228,34 @@ export const NasaSpiceApiModal: React.FC<NasaSpiceApiModalProps> = ({
   const handleQuerySpaceTrack = async () => {
     setIsQueryingSpaceTrack(true);
     try {
-      const res = await querySpaceTrack({
+      const payload: { noradCatId: string; satelliteName: string; format: 'tle' } = {
         noradCatId: spaceTrackCatId.trim(),
         satelliteName: spaceTrackName.trim(),
         format: 'tle',
-        userEmail: spaceTrackEmail.trim(),
-        userPassword: spaceTrackPassword.trim(),
+      };
+
+      const response = await fetch('/api/space-track', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
       });
+
+      const data = await response.json();
+      const res = data && typeof data === 'object' ? data : await querySpaceTrack(payload);
       setSpaceTrackResponse(res);
       if (res.satellites && res.satellites.length > 0) {
         setSelectedSat(res.satellites[0]);
       }
     } catch (err) {
       console.error(err);
+      const fallback = await querySpaceTrack({
+        noradCatId: spaceTrackCatId.trim(),
+        satelliteName: spaceTrackName.trim(),
+        format: 'tle',
+      });
+      setSpaceTrackResponse(fallback);
     } finally {
       setIsQueryingSpaceTrack(false);
     }
@@ -869,11 +882,10 @@ export const NasaSpiceApiModal: React.FC<NasaSpiceApiModalProps> = ({
                   </div>
                 </div>
 
-                {/* Optional Developer Credentials */}
-                <div className="border-t border-slate-800/80 pt-3 flex flex-col gap-2">
+                <div className="border-t border-slate-800/80 pt-3 flex flex-col gap-2 text-slate-300 text-[11px]">
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-slate-400 font-medium">
-                      Space-Track.org Developer Credentials (Optional)
+                      Server-side authentication only
                     </span>
                     <a
                       href="https://www.space-track.org/auth/createAccount"
@@ -881,26 +893,13 @@ export const NasaSpiceApiModal: React.FC<NasaSpiceApiModalProps> = ({
                       rel="noopener noreferrer"
                       className="text-purple-400 hover:text-purple-300 text-[11px] flex items-center gap-1"
                     >
-                      <span>Request Free Account</span>
+                      <span>Create Free Account</span>
                       <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                    <input
-                      type="email"
-                      value={spaceTrackEmail}
-                      onChange={(e) => setSpaceTrackEmail(e.target.value)}
-                      placeholder="Developer Email (identity)"
-                      className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-300 font-mono text-xs focus:outline-none focus:border-purple-500"
-                    />
-                    <input
-                      type="password"
-                      value={spaceTrackPassword}
-                      onChange={(e) => setSpaceTrackPassword(e.target.value)}
-                      placeholder="Developer Password"
-                      className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-300 font-mono text-xs focus:outline-none focus:border-purple-500"
-                    />
-                  </div>
+                  <p className="text-slate-300 leading-relaxed">
+                    The browser never accepts or sends Space-Track credentials. Real credentials are stored in server-side Vercel environment variables and used only by the protected API route.
+                  </p>
                 </div>
 
                 {/* Generated REST URL */}
@@ -927,8 +926,6 @@ export const NasaSpiceApiModal: React.FC<NasaSpiceApiModalProps> = ({
                           generateSpaceTrackCurl({
                             noradCatId: spaceTrackCatId,
                             satelliteName: spaceTrackName,
-                            userEmail: spaceTrackEmail,
-                            userPassword: spaceTrackPassword,
                             format: 'tle',
                           }),
                           'spacetrack'
@@ -944,8 +941,6 @@ export const NasaSpiceApiModal: React.FC<NasaSpiceApiModalProps> = ({
                     {generateSpaceTrackCurl({
                       noradCatId: spaceTrackCatId,
                       satelliteName: spaceTrackName,
-                      userEmail: spaceTrackEmail,
-                      userPassword: spaceTrackPassword,
                       format: 'tle',
                     })}
                   </pre>

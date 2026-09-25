@@ -22,6 +22,11 @@ export interface SpaceTrackQueryConfig {
   userPassword?: string;
 }
 
+const SPACE_TRACK_SERVER_PLACEHOLDERS = {
+  email: 'YOUR_SPACE_TRACK_EMAIL',
+  password: 'YOUR_SPACE_TRACK_PASSWORD',
+};
+
 export interface SpaceTrackApiResponse {
   status: 'SUCCESS' | 'AUTH_REQUIRED' | 'SYNCED_US_SPACE_COMMAND' | 'ERROR';
   queryUrl: string;
@@ -63,8 +68,8 @@ export function buildSpaceTrackQueryUrl(config: SpaceTrackQueryConfig): string {
  */
 export function generateSpaceTrackCurl(config: SpaceTrackQueryConfig): string {
   const queryUrl = buildSpaceTrackQueryUrl(config);
-  const email = config.userEmail || 'user@example.com';
-  const password = config.userPassword || 'YOUR_PASSWORD';
+  const email = config.userEmail || SPACE_TRACK_SERVER_PLACEHOLDERS.email;
+  const password = config.userPassword || SPACE_TRACK_SERVER_PLACEHOLDERS.password;
 
   return `curl -v -b cookies.txt -c cookies.txt \\
   --data "identity=${email}&password=${password}" \\
@@ -79,44 +84,19 @@ export async function querySpaceTrack(config: SpaceTrackQueryConfig): Promise<Sp
   const queryUrl = buildSpaceTrackQueryUrl(config);
   const curlCommand = generateSpaceTrackCurl(config);
 
-  // If user provided login credentials, attempt direct Space-Track authenticated query
-  if (config.userEmail && config.userPassword) {
-    try {
-      const loginRes = await fetch(`${SPACE_TRACK_BASE_URL}/ajaxauth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          identity: config.userEmail,
-          password: config.userPassword,
-        }),
-      });
-
-      if (loginRes.ok) {
-        const dataRes = await fetch(queryUrl);
-        if (dataRes.ok) {
-          const raw = await dataRes.text();
-          const parsed = parseTleCatalog(raw);
-          if (parsed.length > 0) {
-            return {
-              status: 'SUCCESS',
-              queryUrl,
-              curlCommand,
-              satellites: parsed,
-              rawText: raw,
-              notes: `Successfully retrieved ${parsed.length} satellite(s) directly from Space-Track.org authenticated endpoint!`,
-            };
-          }
-        }
-      }
-    } catch (err) {
-      console.warn('Direct Space-Track CORS or authentication attempt failed:', err);
-    }
+  // Do not allow browser-side credential submission for a public Vercel client.
+  // Any real Space-Track login must happen on a protected server endpoint.
+  if (config.userEmail || config.userPassword) {
+    return {
+      status: 'AUTH_REQUIRED',
+      queryUrl,
+      curlCommand,
+      satellites: [],
+      notes: 'This client is intentionally configured to avoid browser-side credential submission. Configure Space-Track credentials on the server only and call the protected /api/space-track endpoint.',
+    };
   }
 
-  // Without credentials or if browser CORS blocks Space-Track session cookie:
-  // We query CelesTrak's real-time direct mirror of the US Space Command 18th SDS catalog
+  // Query CelesTrak's real-time direct mirror of the US Space Command 18th SDS catalog
   let catId = config.noradCatId ? String(config.noradCatId).trim() : '';
 
   if (catId) {
@@ -165,6 +145,6 @@ export async function querySpaceTrack(config: SpaceTrackQueryConfig): Promise<Sp
     queryUrl,
     curlCommand,
     satellites: [],
-    notes: `Space-Track.org requires free developer account credentials to query private REST endpoints. Use the generated cURL command or query by NORAD ID to synchronize automatically via the public US Space Command mirror.`,
+    notes: 'Space-Track.org requires developer credentials, but this browser app never accepts or sends them. Use the public mirrored catalog or configure credentials on the server side via /api/space-track.',
   };
 }
