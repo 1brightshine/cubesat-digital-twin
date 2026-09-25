@@ -474,15 +474,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLaunchSimulator }) =
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setIsAddCrewModalOpen(true)}
-                className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-cyan-300 hover:text-cyan-200 flex items-center gap-2 transition-all"
-              >
-                <PlusCircle className="w-4 h-4" />
-                <span>Add / Edit Crew Member</span>
-              </button>
-            </div>
+            <div className="flex items-center gap-3" />
           </div>
 
           {/* Responsive Grid of Professional Profile Cards */}
@@ -534,14 +526,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLaunchSimulator }) =
                       )}
                     </div>
 
-                    {/* Small Circular Golden Badge: "Pioneer Class" */}
-                    <div
-                      className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-950/40 border border-amber-500/50 text-amber-300 text-[10px] font-mono font-bold shadow-[0_0_10px_rgba(245,158,11,0.2)] shrink-0"
-                      title="Member of Ethiopia's Inaugural Aerospace Engineering B.Sc. Cohort"
-                    >
-                      <Award className="w-3.5 h-3.5 text-amber-400 fill-amber-400/20" />
-                      <span>Pioneer Class</span>
-                    </div>
                   </div>
 
                   {/* Name, Role & Social handles */}
@@ -754,16 +738,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLaunchSimulator }) =
               <span>&copy; {new Date().getFullYear()} Space Science and Geospatial Institute (SSGI), Ethiopia. All rights reserved.</span>
             </div>
 
-            {/* Right: Technical Version & System Disclaimers */}
-            <div className="flex items-center gap-3 font-mono text-[11px]">
-              <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-cyan-300">
-                v1.0.0-Beta
-              </span>
-              <span className="text-slate-500">|</span>
-              <span className="text-slate-400">
-                Build 2026.09-ETHIOPIA-SSGI
-              </span>
-            </div>
+            {/* Right: System Build Information */}
+            <div className="flex items-center gap-3 font-mono text-[11px]" />
           </div>
 
           {/* Technical Disclaimer Notice */}
