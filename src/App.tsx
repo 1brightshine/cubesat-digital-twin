@@ -5,6 +5,7 @@
  */
 
 import React, { useState, useMemo, useCallback } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import {
   KeplerianElements,
   CubeSatSpec,
@@ -781,6 +782,7 @@ export default function App() {
         derivedState={derivedState}
         spice={spiceState}
       />
+      <Analytics />
     </div>
   );
 }
